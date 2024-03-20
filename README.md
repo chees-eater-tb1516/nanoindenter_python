@@ -1,5 +1,3 @@
-# research_python
+# nanoindenter_python
 
-contains various scripts for parsing and processing data files from experimental test rigs  
-
-and also for plotting results
+python module for parsing and analysing results from the Anton Paar NHT3 Nanoindenter
