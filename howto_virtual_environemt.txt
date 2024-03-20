@@ -1,0 +1,29 @@
+create a virtual environment to automatically ensure all the dependencies of the module APNano are installed
+
+use conda for managing environments. It would be wise to install Miniconda since this is both a decent python distrubution and also comes with conda.
+
+https://docs.anaconda.com/free/miniconda/miniconda-install/
+
+run the command:
+
+conda env create -f "insert path to .yml file here"
+
+e.g. on my machine, currently the path to the .yml file is: 
+
+D:\PhD_data\OneDrive - Imperial College London\1. PhD\python_dev\nanoindenter_python\environment.yml
+
+yours will be different!
+
+(if conda can't be found, try running the command from the dedicated anaconda prompt installed with miniconda)
+
+I will be sure to update the .yml file if the dependencies change.
+
+in case of updates to the .yml file, run:
+
+conda env update -f "insert path to .yml file here"
+
+select the environment within your IDE or to run python from the command line, activate the environment using:
+
+conda activate NameOfEnvironment 
+
+(in this case the environment is called APNano, this is stored in the .yml file.)

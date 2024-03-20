@@ -1,0 +1,8 @@
+name: APNano
+dependencies:
+  - python==3.11
+  - flake8
+  - pylint
+  - black
+  - mypy
+  - numpy==1.25.2
