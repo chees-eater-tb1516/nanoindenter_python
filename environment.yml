@@ -6,3 +6,4 @@ dependencies:
   - black
   - mypy
   - numpy==1.25.2
+  - matplotlib
