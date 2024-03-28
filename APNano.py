@@ -27,9 +27,9 @@ def fit_segment(data_array, segment_no):
     segment_displacement = data_array[1][segment]
 
     fit = np.polyfit(segment_displacement**(3/2), segment_force, 1)
-    disp = np.linspace(0,20000,10)    
-    plt.plot(segment_displacement, segment_force)
-    plt.plot(disp, np.polyval(fit, disp**(3/2)))
+    #disp = np.linspace(0,20000,10)    
+    #plt.plot(segment_displacement, segment_force)
+    #plt.plot(disp, np.polyval(fit, disp**(3/2)))
     return float(fit[0])
 results = open ("results.txt", 'w')
 
@@ -44,7 +44,7 @@ with open (filename, 'r') as file:
             while True:
                 try:
                     line = line_gen(file).__next__()
-                except:
+                except StopIteration:    
                     looping = False
                     break
                 #search for the regular expressions defined above and set flags
