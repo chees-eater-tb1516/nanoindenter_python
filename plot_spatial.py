@@ -15,7 +15,7 @@ print (np.mean(data_array[3][30:]))
 print (np.std(data_array[3][30:]))
 
 plt.plot(data_array[1][0:30], data_array[3][0:30], 'k*')
-plt.xlabel('x position [m e-6] crosses wear track')
+plt.xlabel('x position [µm] crosses wear track')
 plt.ylabel('stiffness [arbitrary units]')
 plt.show()
         
