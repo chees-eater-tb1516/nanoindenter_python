@@ -2,7 +2,7 @@ import re
 import numpy as np
 import matplotlib.pyplot as plt
 
-filename = "results_files\yixin_Sample2_Attempt2full-wear_scar.txt"
+filename = "results_files\hfrrwatertest120424_attempt2.TXT"
 
 def line_gen(file):
     for line in file:
@@ -17,8 +17,9 @@ data_lines=[]
 
 header_start = r"Indentation #"
 header_end = r"Measured values"
-data_start = r"0	0	0	0	0"
-data_end =  r"______________________________________________________________"    
+data_start = r"0	0	0	0"
+data_end =  r"______________________________________________________________"   
+contact_warning = r"Warning: Check contact point" 
 
 
 def fit_segment(data_array, segment_no):
@@ -31,7 +32,7 @@ def fit_segment(data_array, segment_no):
     #plt.plot(segment_displacement, segment_force)
     #plt.plot(disp, np.polyval(fit, disp**(3/2)))
     return float(fit[0])
-results = open ("results.txt", 'w')
+results = open ("hfrrwaterresults.txt", 'w')
 
 with open (filename, 'r') as file:
     looping = True
@@ -70,34 +71,51 @@ with open (filename, 'r') as file:
         
         
 
-            #extract useful info from header, could be improved by matching regular expressions again
-
-            indentation_number = header_lines[0]
-            x_position = header_lines[24]
-            y_position = header_lines[25]
+            #extract useful info from header
+            warning = " good"
+            for line in header_lines:
+                
+                
+                if re.search(r"Indentation # ", line):
+                    indentation_number = line
+                
+                if re.search(r"X Position: ", line):
+                    x_position = line
+           
+                if re.search(r"Y Position: ", line):
+                    y_position = line
+                
+                if re.search(contact_warning, line):
+                    warning = " bad"
+                
 
             #convert the list of strings in data_lines into a numpy array for analysis
 
             data_array = np.array([np.fromstring (item, sep='\t') for item in data_lines[:-1]])
 
             data_array = data_array.transpose()
+            
+            #occasionally forces may be negative but we need to ignore these [LAZY]
+            data_array = np.abs(data_array)
 
 
             #analyse data to find 'stiffness'
 
-            segment_nos=[1]
+            segment_nos=[1,3]
             segment_stiffness=[]
 
+            
             for segment in segment_nos:
                 segment_stiffness.append(str(fit_segment(data_array, segment)))
+         
             
-            plt.show()    
+            #plt.show()    
                 
             indentation_number = indentation_number.split("# ")[1][:-1]
             x_position = x_position.split(" ")[5]
             y_position = y_position.split(" ")[5]
             results_string = (',').join(segment_stiffness)
-            results_string = indentation_number + ',' + x_position + ',' + y_position + ',' + results_string + '\n' 
+            results_string = indentation_number + ',' + x_position + ',' + y_position + ',' + results_string + warning +'\n' 
             results.write (results_string)    
                 
             x=1
